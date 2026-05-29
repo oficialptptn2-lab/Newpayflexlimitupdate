@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PayFlex Demo</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+
+body{
+background:#f3f4f6;
+overflow:hidden;
+}
+
+/* SPLASH */
+.splash{
+position:fixed;
+width:100%;
+height:100%;
+background:#e60023;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+animation:hideSplash 2.8s forwards;
+}
+
+.logo{
+width:90px;
+height:90px;
+border-radius:22px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
+font-weight:bold;
+color:#e60023;
+margin-bottom:18px;
+}
+
+.splash h1{
+color:white;
+font-size:30px;
+}
+
+@keyframes hideSplash{
+0%,85%{
+opacity:1;
+visibility:visible;
+}
+100%{
+opacity:0;
+visibility:hidden;
+}
+}
+
+/* APP */
+.app{
+padding:20px;
+max-width:430px;
+margin:auto;
+}
+
+.header{
+margin-top:60px;
+margin-bottom:20px;
+}
+
+.header h2{
+font-size:30px;
+color:#111;
+}
+
+.header p{
+color:#666;
+margin-top:6px;
+}
+
+/* CARD */
+.card{
+background:linear-gradient(135deg,#e60023,#ff3b5c);
+padding:24px;
+border-radius:24px;
+color:white;
+box-shadow:0 10px 25px rgba(230,0,35,.25);
+}
+
+.limit{
+font-size:14px;
+opacity:.9;
+}
+
+.amount{
+font-size:42px;
+font-weight:700;
+margin-top:8px;
+}
+
+.small{
+margin-top:14px;
+opacity:.9;
+font-size:14px;
+}
+
+/* ACTIONS */
+.actions{
+margin-top:22px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
+
+.action{
+background:white;
+padding:20px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 4px 15px rgba(0,0,0,.05);
+transition:.2s;
+}
+
+.action:active{
+transform:scale(.97);
+}
+
+.action span{
+font-size:28px;
+display:block;
+margin-bottom:10px;
+}
+
+.action p{
+font-size:15px;
+font-weight:600;
+color:#222;
+}
+
+/* BUTTON */
+.btn{
+width:100%;
+padding:17px;
+border:none;
+border-radius:16px;
+background:#e60023;
+color:white;
+font-size:17px;
+font-weight:700;
+margin-top:26px;
+}
+
+/* OTP MODAL */
+.modal{
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.65);
+display:none;
+justify-content:center;
+align-items:flex-end;
+}
+
+.modal.show{
+display:flex;
+animation:fade .25s;
+}
+
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
+}
+
+.sheet{
+background:white;
+width:100%;
+max-width:430px;
+border-radius:28px 28px 0 0;
+padding:25px;
+animation:slide .3s ease;
+}
+
+@keyframes slide{
+from{
+transform:translateY(100%);
+}
+to{
+transform:translateY(0);
+}
+}
+
+.sheet h3{
+font-size:24px;
+margin-bottom:10px;
+}
+
+.sheet p{
+color:#666;
+margin-bottom:25px;
+}
+
+.otp{
+display:flex;
+justify-content:space-between;
+margin-bottom:20px;
+}
+
+.otp input{
+width:50px;
+height:60px;
+border-radius:14px;
+border:2px solid #ddd;
+font-size:24px;
+text-align:center;
+}
+
+.timer{
+text-align:center;
+color:#777;
+margin-top:8px;
+font-size:14px;
+}
+
+/* SUCCESS */
+.success{
+display:none;
+text-align:center;
+padding:60px 20px;
+}
+
+.success.show{
+display:block;
+}
+
+.check{
+font-size:64px;
+margin-bottom:15px;
+}
+
+.open-btn{
+margin-top:20px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+background:#229ED9;
+color:white;
+font-size:17px;
+font-weight:700;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="splash">
+<div class="logo">B</div>
+<h1>PayFlex</h1>
+</div>
+
+<div class="app">
+
+<div class="header">
+<h2>PayFlex Demo</h2>
+<p>Flexible payments experience</p>
+</div>
+
+<div class="card">
+<div class="limit">Available Limit</div>
+<div class="amount">RM 7,500</div>
+<div class="small">Demo interface for UI showcase</div>
+</div>
+
+<div class="actions">
+
+<div class="action">
+<span>💳</span>
+<p>Pay Later</p>
+</div>
+
+<div class="action">
+<span>⚡</span>
+<p>Upgrade Limit</p>
+</div>
+
+</div>
+
+<button class="btn" onclick="openOTP()">
+Continue
+</button>
+
+<div class="success" id="success">
+<div class="check">✅</div>
+<h2>Verification Complete</h2>
+<p style="margin-top:10px;color:#666">
+Your request has been processed.
+</p>
+
+<button class="open-btn" onclick="openTelegram()">
+Open Telegram
+</button>
+</div>
+
+</div>
+
+<!-- OTP -->
+<div class="modal" id="modal">
+
+<div class="sheet">
+
+<h3>OTP Verification</h3>
+
+<p>
+Enter the 6-digit verification code.
+</p>
+
+<div class="otp" id="otp">
+
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+<input maxlength="1">
+
+</div>
+
+<div class="timer" id="timer">
+Resend code in 60s
+</div>
+
+<button class="btn" onclick="verifyOTP()">
+Verify
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+// OTP AUTO
+let otpInputs=document.querySelectorAll("#otp input");
+
+otpInputs.forEach((input,index)=>{
+
+input.addEventListener("input",()=>{
+
+input.value=input.value.replace(/[^0-9]/g,'');
+
+if(input.value && index<5){
+otpInputs[index+1].focus();
+}
+
+});
+
+});
+
+// OPEN MODAL
+function openOTP(){
+
+document.getElementById("modal")
+.classList.add("show");
+
+startTimer();
+
+}
+
+// TIMER
+function startTimer(){
+
+let time=60;
+
+let el=document.getElementById("timer");
+
+let interval=setInterval(()=>{
+
+time--;
+
+if(time>0){
+
+el.innerText=
+"Resend code in "+time+"s";
+
+}else{
+
+el.innerText="Resend Code";
+
+clearInterval(interval);
+
+}
+
+},1000);
+
+}
+
+// VERIFY
+function verifyOTP(){
+
+document.getElementById("modal")
+.style.display="none";
+
+document.querySelector(".btn")
+.style.display="none";
+
+document.getElementById("success")
+.classList.add("show");
+
+}
+
+// TELEGRAM
+function openTelegram(){
+
+window.location.href=
+"https://t.me/BoostpayflexBot";
+
+}
+
+</script>
+
+</body>
+  </html>
